@@ -9,8 +9,8 @@ function VirtualizedList(props, externalRef) {
 
   React.useImperativeHandle(externalRef, () => ref.current, []);
 
-  const providerValue = React.useMemo(
-    {
+  const providerValue = React.useMemo(() => {
+    return {
       Child: props.children,
       onChangeHeight(height, index) {
         if (height !== rowsHeightRef.current?.[index]) {
@@ -18,18 +18,27 @@ function VirtualizedList(props, externalRef) {
           ref.current?.resetAfterIndex(index);
         }
       },
-    },
-    [props.children]
-  );
+    };
+  }, [props.children]);
+
+  // console.log("oi");
+  const itemSize = React.useCallback((index) => {
+    const oi = rowsHeightRef.current?.[index] || 0;
+
+    // console.log({ oi, index });
+    return oi || 20;
+  }, []);
 
   return (
     <VirtualizedListContext.Provider value={providerValue}>
       <VariableSizeList
         {...props}
-        itemSize={(index) => rowsHeightRef.current?.[index] || 0}
+        itemSize={itemSize}
         ref={ref}
+        // itemSize={Ok}
       >
         {Render}
+        {/* {() => null} */}
       </VariableSizeList>
     </VirtualizedListContext.Provider>
   );
@@ -37,8 +46,6 @@ function VirtualizedList(props, externalRef) {
 
 function Render({ index, style }) {
   const context = React.useContext(VirtualizedListContext);
-
-  if (!context?.Child) return null;
 
   const divRef = React.useRef(null);
   const size = useComponentSize(divRef);
@@ -50,11 +57,15 @@ function Render({ index, style }) {
     context.onChangeHeight(size.height, index);
   }, [size.height]);
 
+  if (!context?.Child) return null;
+
+  // return null;
   return (
     <div style={style}>
       <div ref={divRef}>{React.createElement(context.Child, ...arguments)}</div>
     </div>
   );
+  // return null;
 }
 
 const VirtualizedListContext = React.createContext({
@@ -67,3 +78,7 @@ const VirtualizedListContext = React.createContext({
 });
 
 export default React.forwardRef(VirtualizedList);
+
+function Ok() {
+  return 80;
+}

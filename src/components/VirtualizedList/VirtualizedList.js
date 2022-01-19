@@ -15,7 +15,7 @@ function VirtualizedList(props, externalRef) {
       onChangeHeight(height, index) {
         if (height !== rowsHeightRef.current?.[index]) {
           rowsHeightRef.current[index] = height;
-          ref.current?.resetAfterIndex(index);
+          height && ref.current?.resetAfterIndex(index);
         }
       },
     };
@@ -24,19 +24,12 @@ function VirtualizedList(props, externalRef) {
   // console.log("oi");
   const itemSize = React.useCallback((index) => {
     const oi = rowsHeightRef.current?.[index] || 0;
-
-    // console.log({ oi, index });
     return oi || 20;
   }, []);
 
   return (
     <VirtualizedListContext.Provider value={providerValue}>
-      <VariableSizeList
-        {...props}
-        itemSize={itemSize}
-        ref={ref}
-        // itemSize={Ok}
-      >
+      <VariableSizeList {...props} itemSize={itemSize} ref={ref}>
         {Render}
         {/* {() => null} */}
       </VariableSizeList>
@@ -59,13 +52,11 @@ function Render({ index, style }) {
 
   if (!context?.Child) return null;
 
-  // return null;
   return (
     <div style={style}>
       <div ref={divRef}>{React.createElement(context.Child, ...arguments)}</div>
     </div>
   );
-  // return null;
 }
 
 const VirtualizedListContext = React.createContext({

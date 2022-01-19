@@ -4,16 +4,21 @@ import VirtualizedList from "./components/VirtualizedList/VirtualizedList";
 import { loremIpsum } from "lorem-ipsum";
 
 function App() {
-  const [state, setState] = useState(0);
+  const ref = React.useRef(null);
+
+  useEffect(() => {
+    console.log(ref);
+  }, []);
 
   return (
     <div className="app" style={{ height: "100%" }}>
       <VirtualizedList
-        itemCount={156469998799}
-        overscanCount={10}
+        itemCount={1523745}
+        overscanCount={50}
         estimatedItemSize={70}
-        height={window.innerHeight}
+        height={window.outerHeight / 2}
         width={window.innerWidth / 3}
+        ref={ref}
       >
         {Oi}
       </VirtualizedList>
@@ -27,7 +32,7 @@ export default App;
 function Oi(props: { index: number }) {
   const o = useMemo(() => loremIpsum(), []);
   return (
-    <div style={{ padding: 8, borderTop: "2px solid red" }}>
+    <div style={{ padding: 8, borderTop: "2px solid red" }} className="oi">
       <>
         <b>{props.index} - </b> <span>{o}</span>
       </>

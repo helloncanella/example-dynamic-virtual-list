@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="app" style={{ height: "100%" }}>
       <VirtualizedList
-        itemCount={1523745}
+        itemCount={300000}
         overscanCount={50}
         estimatedItemSize={70}
         height={window.outerHeight / 2}
@@ -30,11 +30,20 @@ function App() {
 export default App;
 
 function Oi(props: { index: number }) {
-  const o = useMemo(() => loremIpsum(), []);
+  const [content, setContent] = React.useState(loremIpsum());
+
+  useEffect(() => {
+    if (props.index % 100 == 0) {
+      setTimeout(() => {
+        setContent(loremIpsum());
+      }, Math.ceil(Math.random() * 3) * 1000);
+    }
+  }, []);
+
   return (
     <div style={{ padding: 8, borderTop: "2px solid red" }} className="oi">
       <>
-        <b>{props.index} - </b> <span>{o}</span>
+        <b>{props.index} - </b> <span>{content}</span>
       </>
     </div>
   );

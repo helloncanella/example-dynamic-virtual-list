@@ -21,23 +21,21 @@ function VirtualizedList(props, externalRef) {
     };
   }, [props.children]);
 
-  // console.log("oi");
   const itemSize = React.useCallback((index) => {
-    const oi = rowsHeightRef.current?.[index] || 0;
-    return oi || 20;
+    const height = rowsHeightRef.current?.[index] || 0;
+    return height || 20;
   }, []);
 
   return (
     <VirtualizedListContext.Provider value={providerValue}>
       <VariableSizeList {...props} itemSize={itemSize} ref={ref}>
-        {Render}
-        {/* {() => null} */}
+        {DynamicRow}
       </VariableSizeList>
     </VirtualizedListContext.Provider>
   );
 }
 
-function Render({ index, style }) {
+function DynamicRow({ index, style }) {
   const context = React.useContext(VirtualizedListContext);
 
   const divRef = React.useRef(null);

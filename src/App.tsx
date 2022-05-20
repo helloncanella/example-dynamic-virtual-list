@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import VirtualizedList from "./components/VirtualizedList/VirtualizedList";
-import DynamicVirtualList from "dynamic-virtual-list/src/DynamicVirtualList/DynamicVirtualList";
+import DynamicVirtualList from "./components/VirtualizedList/VirtualizedList";
+// import DynamicVirtualList from "dynamic-virtual-list/src/DynamicVirtualList/DynamicVirtualList";
 
 import { loremIpsum } from "lorem-ipsum";
 

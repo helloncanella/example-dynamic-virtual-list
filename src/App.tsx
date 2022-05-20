@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import VirtualizedList from "./components/VirtualizedList/VirtualizedList";
+import DynamicVirtualList from "dynamic-virtual-list/src/DynamicVirtualList/DynamicVirtualList";
 
 import { loremIpsum } from "lorem-ipsum";
 
@@ -12,7 +13,17 @@ function App() {
 
   return (
     <div className="app" style={{ height: "100%" }}>
-      <VirtualizedList
+      <DynamicVirtualList
+        itemCount={300000}
+        overscanCount={50}
+        estimatedItemSize={70}
+        // height={window.outerHeight / 2}
+        // width={window.innerWidth / 3}
+        ref={ref}
+      >
+        {Oi}
+      </DynamicVirtualList>
+      {/* <VirtualizedList
         itemCount={300000}
         overscanCount={50}
         estimatedItemSize={70}
@@ -21,7 +32,7 @@ function App() {
         ref={ref}
       >
         {Oi}
-      </VirtualizedList>
+      </VirtualizedList> */}
       {/* {null} */}
     </div>
   );

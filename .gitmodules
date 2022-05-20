@@ -1,0 +1,3 @@
+[submodule "src/components/dynamic-virtual-list"]
+	path = src/components/dynamic-virtual-list
+	url = git@github.com:helloncanella/dynamic-virtual-list.git
